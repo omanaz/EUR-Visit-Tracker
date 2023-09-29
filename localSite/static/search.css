@@ -1,0 +1,17 @@
+#tableContainer {
+    width: 90%;
+    margin: 100px 50px 50px 50px;
+}
+
+td {
+    border: 1px solid black;
+}
+
+#tools {
+    position: absolute;
+    left: 30%;
+}
+
+#tools input, #tools select {
+    margin-right: 20px;
+}
