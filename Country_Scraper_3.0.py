@@ -58,7 +58,7 @@ if __name__ == "__main__":
     grouped_df = pd.DataFrame({'Country': groups.index, 'Value': groups.values})
     grouped_df['Country']=grouped_df['Country'].replace(to_replace='Czech-Republic', value='Czech Republic')
     # grouped_df['Value'] = (grouped_df['Value']- np.min(grouped_df['Value']))/(np.max(grouped_df['Value']) - np.min(grouped_df['Value']))
-    geojson_folder = r'C:\Users\olove\Documents\state_coding\geoJson'
+    geojson_folder = r'data\geoJson'
     # Initialize an empty list to store GeoDataFrames
     gdf_list = []
 
