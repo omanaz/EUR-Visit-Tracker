@@ -182,102 +182,99 @@ document.getElementById('countrySelect').addEventListener('change', function(e) 
   displayCSVTable(csvData, document.getElementById('searchPart').value, e.target.value);
 });
 
-function createSelect(){
-  const dropdownButton = document.getElementById("dropdownButton");
-  const dropdownContent = document.getElementById("dropdownContent");
+// // function createSelect(){
+// //   const dropdownButton = document.getElementById("dropdownButton");
+// //   const dropdownContent = document.getElementById("dropdownContent");
 
-  // Function to toggle the dropdown content
-  function toggleDropdown() {
-    dropdownContent.style.display = dropdownContent.style.display === "block" ? "none" : "block";
-  }
-  dropdownButton.addEventListener("click", toggleDropdown);
-// create principal select boxes
-  const csvData = localStorage.getItem('csvData');
+// //   // Function to toggle the dropdown content
+// //   function toggleDropdown() {
+// //     dropdownContent.style.display = dropdownContent.style.display === "block" ? "none" : "block";
+// //   }
+// //   dropdownButton.addEventListener("click", toggleDropdown);
+// // // create principal select boxes
+// //   const csvData = localStorage.getItem('csvData');
 
-  const rows = d3.csvParse(csvData);
+// //   const rows = d3.csvParse(csvData);
 
-  rows.forEach((row) => {
-    if (row['US Participant']) {
-      // Split the names by space to process each name
-      const names = row['US Participant'].split(' ');
+// //   rows.forEach((row) => {
+// //     if (row['US Participant']) {
+// //       // Split the names by space to process each name
+// //       const names = row['US Participant'].split(' ');
 
-      // Remove initials (e.g., J.D., A. B., etc.)
-      const filteredNames = names.map((name) => {
-        // Check if the name is an initial (a single capital letter followed by a period)
-        if (/^[A-Z]\.$/.test(name)) {
-          return ''; // Remove initials
-        } else {
-          return name; // Keep full names
-        }
-      });
+// //       // Remove initials (e.g., J.D., A. B., etc.)
+// //       const filteredNames = names.map((name) => {
+// //         // Check if the name is an initial (a single capital letter followed by a period)
+// //         if (/^[A-Z]\.$/.test(name)) {
+// //           return ''; // Remove initials
+// //         } else {
+// //           return name; // Keep full names
+// //         }
+// //       });
 
-      // Join the filtered names back together with spaces
-      row['US Participant'] = filteredNames.join(' ');
-    }
-  });
+// //       // Join the filtered names back together with spaces
+// //       row['US Participant'] = filteredNames.join(' ');
+// //     }
+// //   });
+  
+//   const desiredHeaders = ["Event Name", "Date", "US Participant", "Country Participant", "Country"];
 
+//   const filteredRows = rows.map(row => {
+//     const filteredRow = {};
+//     desiredHeaders.forEach(header => {
+//       filteredRow[header] = row[header];
+//     });
+//     return filteredRow;
+//   });
 
-  const desiredHeaders = ["Event Name", "Date", "US Participant", "Country Participant", "Country"];
-
-  const filteredRows = rows.map(row => {
-    const filteredRow = {};
-    desiredHeaders.forEach(header => {
-      filteredRow[header] = row[header];
-    });
-    return filteredRow;
-  });
-
-  const uniqueUSParticipants = [...new Set(filteredRows.map(row => row['US Participant']))];
-  let parsedUniqueParticipants = new Set();
-  uniqueUSParticipants.forEach((i) => {
-    if (i.includes(',')){
-      const arr = i.split(',');
-      arr.forEach((j) => {parsedUniqueParticipants.add(stripWhitespace(j));})
-      // console.log(arr);
-      console.log(parsedUniqueParticipants);
-    } else{
-      parsedUniqueParticipants.add(i)
-    }
-  });
-
+//   const uniqueUSParticipants = [...new Set(filteredRows.map(row => row['US Participant']))];
+//   let parsedUniqueParticipants = new Set();
+//   uniqueUSParticipants.forEach((i) => {
+//     if (i.includes(',')){
+//       const arr = i.split(',');
+//       arr.forEach((j) => {parsedUniqueParticipants.add(stripWhitespace(j));})
+//       // console.log(arr);
+//       console.log(parsedUniqueParticipants);
+//     } else{
+//       parsedUniqueParticipants.add(i)
+//     }
+//   });
 
 
+// // Generate checkboxes and add them to the dropdown content
+// parsedUniqueParticipants.forEach(participant => {
+//   const checkboxLabel = document.createElement("label");
+//   checkboxLabel.className = "checkbox-label";
 
-// Generate checkboxes and add them to the dropdown content
-parsedUniqueParticipants.forEach(participant => {
-  const checkboxLabel = document.createElement("label");
-  checkboxLabel.className = "checkbox-label";
+//   const checkbox = document.createElement("input");
+//   checkbox.type = "checkbox";
+//   checkbox.value = participant;
+//   checkbox.checked = true;
+//   checkboxLabel.appendChild(checkbox);
 
-  const checkbox = document.createElement("input");
-  checkbox.type = "checkbox";
-  checkbox.value = participant;
-  checkbox.checked = true;
-  checkboxLabel.appendChild(checkbox);
+//   const labelText = document.createTextNode(participant);
+//   checkboxLabel.appendChild(labelText);
 
-  const labelText = document.createTextNode(participant);
-  checkboxLabel.appendChild(labelText);
+//   dropdownContent.appendChild(checkboxLabel);
 
-  dropdownContent.appendChild(checkboxLabel);
+//   // Handle checkbox change event
+//   checkbox.addEventListener("change", function() {
+//     // You can perform actions when a checkbox is checked or unchecked here
+//     // add filter functionality
+//     // console.log(`Checkbox for ${participant} is checked: ${checkbox.checked}`);
+//     if (! checkbox.checked){
+//       blackList.add(participant);
+//       displayCSVTable(csvData, document.getElementById('searchPart').value, document.getElementById('countrySelect').value);
 
-  // Handle checkbox change event
-  checkbox.addEventListener("change", function() {
-    // You can perform actions when a checkbox is checked or unchecked here
-    // add filter functionality
-    // console.log(`Checkbox for ${participant} is checked: ${checkbox.checked}`);
-    if (! checkbox.checked){
-      blackList.add(participant);
-      displayCSVTable(csvData, document.getElementById('searchPart').value, document.getElementById('countrySelect').value);
-
-    }else{
-      blackList.delete(participant); 
-      displayCSVTable(csvData, document.getElementById('searchPart').value, document.getElementById('countrySelect').value);
+//     }else{
+//       blackList.delete(participant); 
+//       displayCSVTable(csvData, document.getElementById('searchPart').value, document.getElementById('countrySelect').value);
       
-    }
-  });
-});
-}
+//     }
+//   });
+// });
+// }
 
-createSelect();
+// createSelect();s
 
 
 function createInitialsSelect(){
