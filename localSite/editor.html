@@ -6,32 +6,70 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Editor</title>
     <link rel="stylesheet" href="static/style.css">
-    <link rel="stylesheet" href="static/landing.css">
+    <link rel="stylesheet" href="static/editor.css">
   </head>
   <body>
     <div class="header"> <a href="landing.html"><img src="static/images/State_Logo_Navy_XL.png" ></a> </div>
-	  <script src="static/main.js"></script>
     <div class="container">
-    
+    <form id="eventSubmit" action="javascript:void(0)" method="post" onsubmit="eventInsert(event)"> 
+      <label for="eventName">Event Name:</label>
+      <input type="text" id="eventName" name="eventName" required><br><br>
+
+      <label for="eventDate">Date:</label>
+      <input type="date" id="eventDate" name="eventDate" required><br><br>
+
+      <label for="participant1">US Participant First Name:</label>
+      <input type="text" id="participantUSF" name="participantUSF" required><br><br>
+
+      <label for="participant1">US Participant Last Name:</label>
+      <input type="text" id="participantUSL" name="participantUSL" required><br><br>
+
+
+      <label for="participant2">Country Participant:</label>
+      <input type="text" id="participantEUR" name="participantEUR" required><br><br>
+
+      <label for="country">Country:</label>
+      <select id="country" name="country" required>
+        <option value="Austria">Austria</option>
+        <option value="Bulgaria">Bulgaria</option>
+        <option value="Czech-Republic">Czech Republic</option>
+        <option value="Hungary">Hungary</option>
+        <option value="Poland">Poland</option>
+        <option value="Romania">Romania</option>
+        <option value="Slovakia">Slovakia</option>
+        <option value="Slovenia">Slovenia</option>
+        <option value="Liechtenstein">Liechtenstein</option>
+        <option value="Switzerland">Switzerland</option>
+    </select><br><br>
+
+      <input type="submit" value="Submit">
+  </form>
+  <a id="downloadButton"></a>
+  <div id="successModal" class="modal">
+    <div class="modal-content">
+      <span class="close" id="closeModal">&times;</span>
+      <p>File successfully loaded!</p>
     </div>
-    
+  </div>
+</div>
     <!-- Austria, Bulgaria, the Czech Republic, Hungary, Poland, Romania, Slovakia, Slovenia, Liechtenstein, and Switzerland -->
     <!-- Credit Slovenia by Andrejs Kirma from <a href="https://thenounproject.com/browse/icons/term/slovenia/" target="_blank" title="Slovenia Icons">Noun Project</a> (CC BY 3.0) -->
     <div class="footer">
-        <div id="footerContainer">
-            <img src="static/images/Austria.png">
-            <img src="static/images/Bulgaria.png">
-            <img src="static/images/Czech_Republic.png">
-            <img src="static/images/Hungary.png">
-            <img src="static/images/Poland.png">
-            <img src="static/images/Romania.png">
-            <img src="static/images/Slovakia.png">
-            <img src="static/images/Slovenia.png">
-            <img src="static/images/Liechtenstein.png">
-            <img src="static/images/Switzerland.png">
-        </div>
-    </div>
+      <div id="footerContainer">
+          <img src="static/images/AustriaFlag.png">
+          <img src="static/images/BulgariaFlag.png">
+          <img src="static/images/Czech_RepublicFlag.png">
+          <img src="static/images/HungaryFlag.png">
+          <img src="static/images/PolandFlag.png">
+          <img src="static/images/RomaniaFlag.png">
+          <img src="static/images/SlovakiaFlag.png">
+          <img src="static/images/SloveniaFlag.png">
+          <img src="static/images/LiechtensteinFlag.png">
+          <img src="static/images/SwitzerlandFlag.png">
+      </div>
+  </div>
     
+	  <script src="static/editor.js"></script>
 
   </body>
 </html>

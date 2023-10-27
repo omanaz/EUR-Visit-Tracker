@@ -7,7 +7,7 @@
     <title>Data Searcher</title>
     <link rel="stylesheet" href="static/style.css">
     <link rel="stylesheet" href="static/search.css">
-    
+    <script src="https://d3js.org/d3.v7.min.js"></script>
   </head>
   <body>
     <div class="header"> <a href="landing.html"><img src="static/images/State_Logo_Navy_XL.png" ></a> </div>
@@ -29,7 +29,21 @@
         <option>Liechtenstein</option>
         <option>Switzerland</option>
       </select>
+      <div class="dropdown">
+        <button class="dropdown-toggle" id="dropdownButton">Select Participants</button>
+        <div class="dropdown-content" id="dropdownContent">
+          <!-- Checkboxes will be added here dynamically -->
+        </div>
+      </div>
+      <div class="dropdown">
+        <button class="dropdown-toggle" id="dropdownButton2">Select by Letter</button>
+        <div class="dropdown-content" id="dropdownContent2">
+          <!-- Checkboxes will be added here dynamically -->
+        </div>
+      </div>
+      Events: <span id="eventCountSpan"></span>
       <!-- <input id='fileInput' type="file"> -->
+      <button id="download">Download</button>
     </div>
     <div id="tableContainer"></div>
 
@@ -41,19 +55,18 @@
 
     <div class="footer">
       <div id="footerContainer">
-          <img src="static/images/Austria.png">
-          <img src="static/images/Bulgaria.png">
-          <img src="static/images/Czech_Republic.png">
-          <img src="static/images/Hungary.png">
-          <img src="static/images/Poland.png">
-          <img src="static/images/Romania.png">
-          <img src="static/images/Slovakia.png">
-          <img src="static/images/Slovenia.png">
-          <img src="static/images/Liechtenstein.png">
-          <img src="static/images/Switzerland.png">
+          <img src="static/images/AustriaFlag.png">
+          <img src="static/images/BulgariaFlag.png">
+          <img src="static/images/Czech_RepublicFlag.png">
+          <img src="static/images/HungaryFlag.png">
+          <img src="static/images/PolandFlag.png">
+          <img src="static/images/RomaniaFlag.png">
+          <img src="static/images/SlovakiaFlag.png">
+          <img src="static/images/SloveniaFlag.png">
+          <img src="static/images/LiechtensteinFlag.png">
+          <img src="static/images/SwitzerlandFlag.png">
       </div>
   </div>
-  <script src="https://d3js.org/d3.v7.min.js"></script>
 	  <!-- <script src="static/main.js"></script> -->
     <script src="static/search.js"></script>
   </body>
