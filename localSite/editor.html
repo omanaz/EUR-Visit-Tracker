@@ -13,20 +13,42 @@
     <div class="container">
     <form id="eventSubmit" action="javascript:void(0)" method="post" onsubmit="eventInsert(event)"> 
       <label for="eventName">Event Name:</label>
-      <input type="text" id="eventName" name="eventName" required><br><br>
-
+      <input type="text" id="eventName" name="eventName" required>
+      <br>
+        
       <label for="eventDate">Date:</label>
-      <input type="date" id="eventDate" name="eventDate" required><br><br>
+      <input type="date" id="eventDate" name="eventDate" required>
+      <br>
 
-      <label for="participant1">US Participant First Name:</label>
-      <input type="text" id="participantUSF" name="participantUSF" required><br><br>
+      <label for="participantUSF">US Participant First Name:</label>
+      <input type="text" id="participantUSF" name="participantUSF" required>
+      <br>
 
-      <label for="participant1">US Participant Last Name:</label>
-      <input type="text" id="participantUSL" name="participantUSL" required><br><br>
+      <label for="participantUSL">US Participant Last Name:</label>
+      <input type="text" id="participantUSL" name="participantUSL" required>
+      <br>
 
+      <label for="titleSelect">US Participant Title:</label>
+      <select id="titleSelect" name="titleSelect" required>
+        <option value="POTUS">President (POTUS)</option>
+        <option value="VPOTUS">Vice President (VPOTUS)</option>
+        <option value="S">Secretary of State (S)</option>
+        <option value="D">Deputy Secretary (D)</option>
+        <option value="D-MR">Deputy Secretary for Management and Resources (D-MR)</option>
+        <option value="C">Counselor to the Secretary of State (C)</option>
+        <option value="P">Under Secretary for Political Affairs (P)</option>
+        <option value="E">Under Secretary for Economics, Energy and Environment (E)</option>
+        <option value="T">Under Secretary for Arms Control and International Security (T)</option>
+        <option value="R">Under Secretary for Public Diplomacy and Public Affairs (R)</option>
+        <option value="M">Under Secretary for Management (M)</option>
+        <option value="J">Under Secretary for Civilian Security, Democracy, and Human Rights (J)</option>
+        <option value="A/S EUR">Assistant Secretary for European Affairs (A/S EUR)</option>
+      </select>
+      <br>
 
-      <label for="participant2">Country Participant:</label>
-      <input type="text" id="participantEUR" name="participantEUR" required><br><br>
+      <label for="participantEUR">Country Participant:</label>
+      <input type="text" id="participantEUR" name="participantEUR" required> 
+      <br>
 
       <label for="country">Country:</label>
       <select id="country" name="country" required>
@@ -40,7 +62,8 @@
         <option value="Slovenia">Slovenia</option>
         <option value="Liechtenstein">Liechtenstein</option>
         <option value="Switzerland">Switzerland</option>
-    </select><br><br>
+    </select>
+    <br><br>  
 
       <input type="submit" value="Submit">
   </form>

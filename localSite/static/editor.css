@@ -1,9 +1,26 @@
-.container{
+/* .container{
     position: absolute;
     top:0;
     bottom: 0;
     left: 0;
     right: 0;
     margin: 100px;
+    text-align: center;
+    align-items: center;
+} */
+#eventSubmit {
+    margin: 100px auto 0;
+    width: 37%;
+    text-align: center;
+    background-color: lightblue;
+    box-shadow: 0px 0px 10px grey;
+    padding: 20px;
+  }
+
+#eventSubmit label{
+    margin-top: 10px;
+    display: block;
+}
+#titleSelect{
     text-align: center;
 }
