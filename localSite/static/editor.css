@@ -8,7 +8,8 @@
     text-align: center;
     align-items: center;
 } */
-#eventSubmit {
+#eventSubmit { 
+    /* the css for the form */
     margin: 100px auto 0;
     width: 37%;
     text-align: center;
@@ -23,4 +24,19 @@
 }
 #titleSelect{
     text-align: center;
+}
+select, input {
+    border-radius: 10px;
+    padding: 3px 5px;
+}   
+
+input[type="submit"] {
+    background-color: rgb(10, 205, 205);
+    color: #333;
+}
+
+input[type="submit"]:hover {
+    background-color: darkcyan;
+    color: #DAE5F0;
+    cursor: pointer;
 }
