@@ -12,10 +12,13 @@ function eventInsert(event) {
   const participantL = document.getElementById('participantUSL').value;
   const participant2 = document.getElementById('participantEUR').value;
   const country = document.getElementById('country').value;
+  const title = document.getElementById('titleSelect').value;
+  const eventType = document.getElementById('eType').value;
   const USParticipant = participantF +' '+participantL
 
   // Create a CSV row from the form data
-  const csvRow = `${eventName},${eventDate},${USParticipant},${participant2},${country}`;
+  const csvRow = `${eventName},${eventDate},${USParticipant},${participant2},${country},${eventType},${title}`;
+  console.log(csvRow);
 
   // Check if there's existing CSV data in local storage
   let csvData = localStorage.getItem('csvData') || '';
