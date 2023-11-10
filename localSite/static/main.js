@@ -10,6 +10,9 @@ function toAnalysis(){
 function toSearch(){
     window.location.href = "search.html";
 }
+function toTimeline(){
+  window.location.href = "timeline.html";
+}
 document.getElementById('fileInput').addEventListener('change', function(e) {
     const file = e.target.files[0];
     const reader = new FileReader();
