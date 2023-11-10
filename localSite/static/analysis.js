@@ -86,6 +86,45 @@ const countries = [
         console.error(`Error loading GeoJSON for ${countryName}:`, error);
       });
     });
+    const legend = L.control({ position: 'bottomright' });
+
+    legend.onAdd = function (map) {
+        const div = L.DomUtil.create('div', 'info legend');
+        const grades = generateLegendBreaks(opacityScale);
+        const labels = [];
+        labels.push('<h3>Legend</h3>')
+        // Loop through the grades and generate a label with a colored square for each grade
+        for (let i = 0; i < grades.length; i++) {
+            const from = grades[i];
+            const to = grades[i + 1];
+
+            labels.push(
+                '<i style="background-color:' + "#fff" + '"></i> ' +
+                from + (to ? '&ndash;' + to : '+') + '<svg height="10" width="10"> <circle cx="5" cy="5" r="5" fill="green" opacity="' + opacityScale(to) + '" /></svg></div>' 
+            );
+        }
+
+        div.innerHTML = labels.join('<br>');
+        return div;
+    };
+
+    legend.addTo(map);
+
+    // ... (rest of your code)
+
+    // Function to generate legend breaks based on the opacity scale
+    function generateLegendBreaks(scale) {
+        const breaksCount = 5; // Adjust the number of breaks as needed
+        const maxStrength = scale.domain()[1];
+        const step = maxStrength / breaksCount;
+        const breaks = [];
+
+        for (let i = 0; i <= breaksCount; i++) {
+            breaks.push(i * step);
+        }
+
+        return breaks;
+    }
   }
 
 function yearFilter(row){

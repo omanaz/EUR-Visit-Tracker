@@ -28,3 +28,15 @@
 #filters{
     margin: 80px;
 }
+.info{
+    background-color: white;
+    padding: 8px 15px;
+    border: black solid 1px;
+    border-radius: 5px;
+}
+h3{
+    margin: 0;
+}
+svg{
+    margin-left: 5px;
+}
