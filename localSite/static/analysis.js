@@ -2,8 +2,8 @@ const csvData = localStorage.getItem('csvData');
 // const globcsvRows = csvData.trim().split("\n").slice(1); // Skip header row
 
 const blackList = new Set();
-let yearMin = 2021;
-let yearMax = 2023;
+let dateMin = new Date('01-01-2020');
+let dateMax = new Date('01-01-2024');
 
 const countries = [
     "Austria",
@@ -100,7 +100,7 @@ const countries = [
 
             labels.push(
                 '<i style="background-color:' + "#fff" + '"></i> ' +
-                from + (to ? '&ndash;' + to : '+') + '<svg height="10" width="10"> <circle cx="5" cy="5" r="5" fill="green" opacity="' + opacityScale(to) + '" /></svg></div>' 
+                from.toFixed(1) + (to ? '&ndash;' + to.toFixed(1) : '+') + '<svg height="10" width="10"> <circle cx="5" cy="5" r="5" fill="green" opacity="' + opacityScale(to) + '" /></svg></div>' 
             );
         }
 
@@ -132,10 +132,10 @@ function yearFilter(row){
   //check if the year of rowDate is > yearMin and less than yearMax else return false;
   
   // Extract the year from the rowDate (assuming a valid date format)
-  const year = new Date(rowDate).getFullYear();
+  const year = new Date(rowDate);
   // console.log(year);
   // Check if the year is within the specified range (inclusive)
-  if (year >= yearMin && year <= yearMax) {
+  if (year >= dateMin && year <= dateMax) {
     return true; // Year is within the range
   } else {
     return false; // Year is outside the range
@@ -164,35 +164,38 @@ function selectFilter(row){
     return true;
   }
 
-
-$("#slider").slider({
-  range: true,
-  min: 2021, // Replace with your minimum year
-  max: 2023, // Replace with your maximum year
-  step: 1, // You can adjust the step as needed
-  values: [2021, 2023], // Set initial year range
-  slide: function (event, ui) {
-    // Update the displayed year range
-    $("#date-range").text(ui.values[0] + " - " + ui.values[1]);
-
-    // Filter the data based on the selected year range and update the heatmap
-    filterData(ui.values[0], ui.values[1]);
-  },
-});
-
-
-function filterData(startYear, endYear) {
-  yearMax = endYear;
-  yearMin = startYear;
+  $("#filter-button").on("click", function () {
+    // Get the selected start and end dates
+    const startDate = $("#start-date").val();
+    const endDate = $("#end-date").val();
   
-  // Clear the current heatmap layer
-  map.eachLayer((layer) => {
-    if (layer instanceof L.GeoJSON) {
-      map.removeLayer(layer);
-    }
+    // Update the displayed date range
+    $("#date-range").text(startDate + " - " + endDate);
+  
+    // Filter the data based on the selected date range and update the heatmap
+    filterDataByDate(startDate, endDate);
   });
-  createMap(csvData);
-}
+  
+  function filterDataByDate(startDate, endDate) {
+    // Clear the current heatmap layer
+    map.eachLayer((layer) => {
+      if (layer instanceof L.GeoJSON) {
+        map.removeLayer(layer);
+      }
+    });
+    const legend = document.querySelector('.info.legend');
+    if (legend && legend.parentNode) {
+      legend.parentNode.removeChild(legend);
+    }
+  
+    // Update the global variables for filtering
+    dateMin = new Date(startDate);
+    dateMax = new Date(endDate);
+  
+    // Recreate the map with the filtered data
+    createMap(csvData);
+  }
+
 createMap(csvData);
 
 function createInitialsSelect(){
