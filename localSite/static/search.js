@@ -46,7 +46,7 @@ function displayCSVTable(csvData, search, country) {
   });
 
   // Extract headers and filter only the desired ones
-  const desiredHeaders = ["Event Name", "Date", "US Participant", "Country Participant", "Country", "Event Type"];
+  const desiredHeaders = ["Event Name", "Date", "US Participant", "Country Participant", "Country", "Event Type", 'Principal'];
   const filteredRows = rows.map(row => {
     const filteredRow = {};
     desiredHeaders.forEach(header => {
@@ -80,14 +80,14 @@ function displayCSVTable(csvData, search, country) {
       // let bool = countryFilter(row)&& selectFilter(row);
       // console.log(bool);
       // console.log(selectFilter(row));
-      return countryFilter(row)&& selectFilter(row) && eventFilter(row); // Display all rows if search is null or empty
+      return countryFilter(row)&& selectFilter(row) && eventFilter(row) && dateFilter(row); // Display all rows if search is null or empty
     }
     const searchTerm = search.toLowerCase(); // Convert to lowercase for case-insensitive comparison
     return (
       // row["Event Name"].toLowerCase().includes(searchTerm) ||
       row['US Participant'].toLowerCase().includes(searchTerm) ||
       row['Country Participant'].toLowerCase().includes(searchTerm)
-    ) && countryFilter(row) && selectFilter(row) && eventFilter(row);
+    ) && countryFilter(row) && selectFilter(row) && eventFilter(row) && dateFilter(row);
   }
   function countryFilter(row){
     if (country =='All'||!country){
@@ -125,6 +125,23 @@ function displayCSVTable(csvData, search, country) {
       return true;
     }
     return false;
+  }
+  function dateFilter(row){
+    startDate = document.getElementById('start-date').value;
+    endDate = document.getElementById('end-date').value;
+    if (startDate === '' | endDate === ''){
+      return true;
+    } 
+    rowDate = new Date(row.Date);
+    startDate = new Date(startDate);
+    endDate = new Date(endDate);
+    if (startDate > rowDate | endDate < rowDate){
+      console.log(row.Date);
+      console.log(rowDate);
+      return false;
+    }
+    return true;
+    
   }
 
   // Append table rows based on the filtered condition
@@ -193,7 +210,14 @@ document.getElementById('countrySelect').addEventListener('change', function(e) 
 });
 document.getElementById('eType').addEventListener('change', function(e) {
   // console.log(e.target.value);
-  console.log('test');
+  displayCSVTable(csvData, document.getElementById('searchPart').value, document.getElementById('countrySelect').value);
+});
+document.getElementById('start-date').addEventListener('change', function(e) {
+  console.log('hi');
+  displayCSVTable(csvData, document.getElementById('searchPart').value, document.getElementById('countrySelect').value);
+});
+document.getElementById('end-date').addEventListener('change', function(e) {
+  // console.log(e.target.value);
   displayCSVTable(csvData, document.getElementById('searchPart').value, document.getElementById('countrySelect').value);
 });
 

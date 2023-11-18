@@ -9,8 +9,9 @@ td {
 
 #tools {
     position: absolute;
-    left: 20%;
+    left: 12%;
     height: 200px;
+    margin-top: 20px;
 }
 
 #tools input, #tools select {
