@@ -4,7 +4,7 @@ const rows = d3.csvParse(csvData);
 const timelineDiv = d3.select('#timeline');
 
 let visibleRows = 20;
-const rowsPerPage = 10;
+const rowsPerPage = 12;
 
 function createTimelineElement(eventName, date, isEven) {
     const timelineElement = timelineDiv.append('div')
@@ -30,7 +30,17 @@ function loadMoreTimeline() {
 
     for (let i = visibleRows; i < visibleRows + rowsPerPage && i < totalRows; i++) {
         const row = rows[i];
-        const eventName = row['Event Name'].trim();
+        let verb;
+        if (row['Event Type'] === 'Meeting') {
+        verb = 'meets';
+        } else if (row['Event Type'] === 'Call') {
+        verb = 'calls';
+        } else if (row['Event Type'] === 'Visit') {
+        verb = 'visits';
+        } else{
+            verb = row['Event Type'];
+        }
+        const eventName = row['Principal'].trim() +' '+ verb +' '+ row['Country'].trim();
         const date = row['Date'].trim();
         const isEven = i % 2 === 0;
 
