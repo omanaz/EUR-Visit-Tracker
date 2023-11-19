@@ -1,12 +1,12 @@
 const csvData = localStorage.getItem('csvData');
 const rows = d3.csvParse(csvData);
-
+console.log(rows);
 const timelineDiv = d3.select('#timeline');
 
-let visibleRows = 20;
+let visibleRows = 0;
 const rowsPerPage = 12;
 
-function createTimelineElement(eventName, date, isEven) {
+function createTimelineElement(eventName, date, isEven, country) {
     const timelineElement = timelineDiv.append('div')
         .classed('timeline', true);
 
@@ -23,6 +23,10 @@ function createTimelineElement(eventName, date, isEven) {
     containerElement.select('.content')
         .append('p')
         .text(eventName);
+    const imgElement = containerElement.append('img')
+        .classed('country-image', true)
+        .attr('src', `static/images/${country}Flag.png`);
+
 }
 
 function loadMoreTimeline() {
@@ -44,7 +48,7 @@ function loadMoreTimeline() {
         const date = row['Date'].trim();
         const isEven = i % 2 === 0;
 
-        createTimelineElement(eventName, date, isEven);
+        createTimelineElement(eventName, date, isEven, row['Country']);
     }
 
     visibleRows += rowsPerPage;

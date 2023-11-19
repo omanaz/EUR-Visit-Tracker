@@ -32,6 +32,7 @@
     padding: 1px 50px;
     position: relative;
     background-color: inherit;
+    display: inline-block;
     width: 25%;
   }
   
@@ -109,7 +110,6 @@
   
   /* Full-width containers */
     .container {
-      width: 100%;
       padding-left: 70px;
       padding-right: 25px;
     }
@@ -131,4 +131,12 @@
     .right {
       left: 0%;
     }
+  }
+
+  .country-image{
+    display: inline-block;
+    position: relative;
+    /* width: 80px; */
+    height: 80px;
+    left: 20%;
   }
