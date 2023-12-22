@@ -8,6 +8,12 @@ function eventInsert(event) {
   // Get form input values
   const eventName = document.getElementById('eventName').value;
   const eventDate = document.getElementById('eventDate').value;
+  const dateObject = new Date(eventDate);
+  const month = dateObject.getMonth() + 1; // Adding 1 because months are zero-indexed
+  const day = dateObject.getDate()+1;
+  const year = dateObject.getFullYear();
+  // Format the date as "m/d/yyyy"
+  const formattedDate = `${month}/${day}/${year}`;
   const participantF = document.getElementById('participantUSF').value;
   const participantL = document.getElementById('participantUSL').value;
   const participant2 = document.getElementById('participantEUR').value;
@@ -17,7 +23,7 @@ function eventInsert(event) {
   const USParticipant = participantF +' '+participantL
 
   // Create a CSV row from the form data
-  const csvRow = `${eventName},${eventDate},${USParticipant},${participant2},${country},${eventType},${title}`;
+  const csvRow = `${eventName},${formattedDate},"noLink",${USParticipant},${participant2},${country},${eventType},${title}`;
   console.log(csvRow);
 
   // Check if there's existing CSV data in local storage
