@@ -1,6 +1,5 @@
 const csvData = localStorage.getItem('csvData');
 const rows = d3.csvParse(csvData);
-console.log(rows);
 const timelineDiv = d3.select('#timeline');
 
 let visibleRows = 0;
@@ -67,15 +66,30 @@ rows.sort((a, b) => d3.descending(new Date(a['Date']), new Date(b['Date'])));
 // Initial load
 loadMoreTimeline();
 
-// Add scroll event listener
-window.onscroll = function () {
-    if (window.innerHeight + window.scrollY >= document.body.offsetHeight-1) {
-        // User has scrolled to the bottom
-        console.log('test');
-        loadMoreTimeline();
-        // deleteTopTimeline();
-    }
-};
+// Add scroll event listener and show/hide goto top
+document.addEventListener('DOMContentLoaded', function () {
+    const goToTopBtn = document.getElementById('goToTopBtn');
+    const sidebar = document.getElementById('sidebar'); 
+
+    // Show/hide button and adjust sidebar height based on scroll position
+    window.onscroll = function () {
+
+        // Check scroll position for the "go to top" button and sidebar height
+        if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+            goToTopBtn.style.display = 'block';
+            sidebar.style.height = '17vh';
+        } else {
+            goToTopBtn.style.display = 'none';
+            sidebar.style.height = '12vh';
+        }
+
+        // Check if the user has scrolled to the bottom for loading more content
+        if (window.innerHeight + window.scrollY >= document.body.offsetHeight - 1) {
+            loadMoreTimeline();
+        }
+    };
+});
+
 // handle goto
 
 // Function to find the most recent event for a specific country
@@ -135,18 +149,18 @@ function goToTop() {
 }
 
 // Add an event listener to show/hide the button based on the scroll position
-document.addEventListener('DOMContentLoaded', function () {
-    const goToTopBtn = document.getElementById('goToTopBtn');
-    const sidebar = document.getElementById('sidebar'); 
-    // Show/hide button based on scroll position
-    window.onscroll = function () {
-        if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
-            goToTopBtn.style.display = 'block';
-            sidebar.style.height = '17vh';
-        } else {
-            goToTopBtn.style.display = 'none';
-            sidebar.style.height = '12vh';
+// document.addEventListener('DOMContentLoaded', function () {
+//     const goToTopBtn = document.getElementById('goToTopBtn');
+//     const sidebar = document.getElementById('sidebar'); 
+//     // Show/hide button based on scroll position
+//     window.onscroll = function () {
+//         if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+//             goToTopBtn.style.display = 'block';
+//             sidebar.style.height = '17vh';
+//         } else {
+//             goToTopBtn.style.display = 'none';
+//             sidebar.style.height = '12vh';
 
-        }
-    };
-});
+//         }
+//     };
+// });
