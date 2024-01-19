@@ -216,7 +216,7 @@ function createInitialsSelect(){
       row['US Participant'] = filteredNames.join(' ');
     }
   });
-  const principalToAbbreviation = {
+  const principalToAbbreviation = { // dictionary to convert names and titles
     POTUS: ["Joe Biden"],
     VPOTUS: ["Kamala Harris"],
     S: ["Antony Blinken"],
@@ -257,9 +257,7 @@ function createInitialsSelect(){
       const checkbox = d3.select(e.target);
       const participant = checkbox.attr("");
 
-      // You can perform actions when a checkbox is checked or unchecked here
       // add filter functionality
-      // console.log(`Checkbox for ${participant} is checked: ${checkbox.property("checked")}`);
       if (!checkbox.property("checked")) {
         for (let i = 0; i < principalToAbbreviation[D].length; i++){
           blackList.add(principalToAbbreviation[D][i]);

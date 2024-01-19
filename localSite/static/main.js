@@ -1,4 +1,4 @@
-// Austria, Bulgaria, the Czech Republic, Hungary, Poland, Romania, Slovakia, Slovenia, Liechtenstein, and Switzerland
+// Landing page JS file
 let csvData;
 
 function toEdit(){

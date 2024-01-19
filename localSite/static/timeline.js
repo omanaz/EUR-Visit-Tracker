@@ -18,7 +18,7 @@ function createTimelineElement(eventName, date, isEven, country, link) {
         .classed('content', true)
         .append('h3')
         .text(date);
-    console.log(link);
+    // console.log(link);
     containerElement.select('.content')
         .append('p')
         .append('a')
@@ -90,8 +90,6 @@ document.addEventListener('DOMContentLoaded', function () {
     };
 });
 
-// handle goto
-
 // Function to find the most recent event for a specific country
 function findLatestEventForCountry(country) {
     // Assuming rows is your CSV data
@@ -111,10 +109,6 @@ function scrollToLatestEvent(country) {
     const latestEvent = findLatestEventForCountry(country);
 
     if (latestEvent) {
-        // Load all events (you may need to modify this part based on how you load events)
-        // Assuming rows is your CSV data
-        // ...
-
         // Find the index of the latest event
         const index = rows.findIndex(row => row === latestEvent);
 
@@ -147,20 +141,3 @@ goToLatestButton.addEventListener('click', () => {
 function goToTop() {
     window.scrollTo({ top: 0, behavior: 'smooth' });
 }
-
-// Add an event listener to show/hide the button based on the scroll position
-// document.addEventListener('DOMContentLoaded', function () {
-//     const goToTopBtn = document.getElementById('goToTopBtn');
-//     const sidebar = document.getElementById('sidebar'); 
-//     // Show/hide button based on scroll position
-//     window.onscroll = function () {
-//         if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
-//             goToTopBtn.style.display = 'block';
-//             sidebar.style.height = '17vh';
-//         } else {
-//             goToTopBtn.style.display = 'none';
-//             sidebar.style.height = '12vh';
-
-//         }
-//     };
-// });

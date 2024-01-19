@@ -1,6 +1,6 @@
-// Austria, Bulgaria, the Czech Republic, Hungary, Poland, Romania, Slovakia, Slovenia, Liechtenstein, and Switzerland
+//Search page JS
 function stripWhitespace(str) {
-  // Use a regular expression to replace leading and trailing whitespace
+  // Use regular expressions to replace leading and trailing whitespace
   return str.replace(/^\s+|\s+$/g, '');
 }
 
@@ -16,7 +16,6 @@ const csvData = localStorage.getItem('csvData');
 window.addEventListener('load', function(){
   displayCSVTable(csvData,null,null);
   document.getElementsByClassName('footer')[0].style.display = 'none';
-  // console.log('loaded');
 });
 
 
@@ -54,7 +53,6 @@ function displayCSVTable(csvData, search, country) {
     });
     return filteredRow;
   });
-  // console.log(filteredRows);
 
   d3.select('#tableContainer').select('table').remove();
   // Create a table element
@@ -76,20 +74,15 @@ function displayCSVTable(csvData, search, country) {
   // Function to check if a row should be displayed based on the search term
   function searchFilter(row) {
     if (!search) {
-      // console.log('filter');
-      // let bool = countryFilter(row)&& selectFilter(row);
-      // console.log(bool);
-      // console.log(selectFilter(row));
       return countryFilter(row)&& selectFilter(row) && eventFilter(row) && dateFilter(row); // Display all rows if search is null or empty
     }
     const searchTerm = search.toLowerCase(); // Convert to lowercase for case-insensitive comparison
     return (
-      // row["Event Name"].toLowerCase().includes(searchTerm) ||
       row['US Participant'].toLowerCase().includes(searchTerm) ||
       row['Country Participant'].toLowerCase().includes(searchTerm)
-    ) && countryFilter(row) && selectFilter(row) && eventFilter(row) && dateFilter(row);
+    ) && countryFilter(row) && selectFilter(row) && eventFilter(row) && dateFilter(row); // ensure passes all the filters
   }
-  function countryFilter(row){
+  function countryFilter(row){ // Country Select function
     if (country =='All'||!country){
       // console.log('nofilteredcountry')
       return true;
@@ -100,33 +93,27 @@ function displayCSVTable(csvData, search, country) {
     }
     return bool;
   }
-  function selectFilter(row){
+  function selectFilter(row){ //Select By Principal select box
     if (blackList.length== 0){
-      // console.log('length');
       return true;
     }
-    // let bool = true;
-    // console.log(blackList);
     const blackListArray = Array.from(blackList);
     for (let i = 0; i < blackListArray.length; i++) {
       const item = blackListArray[i];
       if (row["US Participant"].includes(item)) {
-        // console.log('notfound');
         return false;
       }
     }
-    // return bool;
     return true;
   }
-  function eventFilter(row){
+  function eventFilter(row){ // Event Type filer
     const eType = document.getElementById('eType').value;
-    // console.log(eType);
-    if (row['Event Type'] === eType || eType == 'All'){
+    if (row['Event Type'] === eType || eType == 'All'){ // e type stands for event type
       return true;
     }
     return false;
   }
-  function dateFilter(row){
+  function dateFilter(row){ // filter function for the two calendar selects 
     startDate = document.getElementById('start-date').value;
     endDate = document.getElementById('end-date').value;
     if (startDate === '' | endDate === ''){
@@ -164,12 +151,7 @@ function displayCSVTable(csvData, search, country) {
   document.getElementById('eventCountSpan').textContent = eventCount-1;
 
 
-  // d3.select('#download').remove(); // Remove existing download button if any
   const downloadButton = d3.select('#download');
-    // d3.select('#tableContainer')
-    // .append('button')
-    // .attr('id', 'download')
-    // .text('Download CSV');
 
   // Function to convert an array of objects to CSV
   function convertToCSV(data) {
@@ -254,7 +236,7 @@ function createInitialsSelect(){
       row['US Participant'] = filteredNames.join(' ');
     }
   });
-  const principalToAbbreviation = {
+  const principalToAbbreviation = { //for converting titles to names
     POTUS: ["Joe Biden"],
     VPOTUS: ["Kamala Harris"],
     S: ["Antony Blinken"],
@@ -295,9 +277,6 @@ function createInitialsSelect(){
       const checkbox = d3.select(e.target);
       const participant = checkbox.attr("");
 
-      // You can perform actions when a checkbox is checked or unchecked here
-      // add filter functionality
-      // console.log(`Checkbox for ${participant} is checked: ${checkbox.property("checked")}`);
       if (!checkbox.property("checked")) {
         for (let i = 0; i < principalToAbbreviation[D].length; i++){
           blackList.add(principalToAbbreviation[D][i]);

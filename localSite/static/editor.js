@@ -1,5 +1,4 @@
-// Austria, Bulgaria, the Czech Republic, Hungary, Poland, Romania, Slovakia, Slovenia, Liechtenstein, and Switzerland
-const csvData = localStorage.getItem('csvData');
+const csvData = localStorage.getItem('csvData'); // retrieve local data
 // Add a function to handle form submission
 function eventInsert(event) {
   console.log('submit');
@@ -58,13 +57,3 @@ function eventInsert(event) {
         }
       };
 }
-
-// Attach the form submission handler to the form
-
-
-// This code will run when the page is loaded
-window.addEventListener('load', function () {
-  console.log('loaded');
-  // const form = document.getElementById('eventSubmit');
-// form.addEventListener('submit', eventInsert);
-});
