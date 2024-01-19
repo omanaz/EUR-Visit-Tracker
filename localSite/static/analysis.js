@@ -1,5 +1,4 @@
-const csvData = localStorage.getItem('csvData');
-// const globcsvRows = csvData.trim().split("\n").slice(1); // Skip header row
+const csvData = localStorage.getItem('csvData'); // retrieve data
 
 const blackList = new Set();
 let dateMin = new Date('01-01-2020');
@@ -18,12 +17,10 @@ const countries = [
     "Switzerland",
   ];
   const map = L.map("mapDiv").setView([48.0, 14.0], 4); // Set initial map center and zoom level
-  // Add a base map (you can choose a suitable tile layer)
+  // Add a base map 
   
   function createMap(mapData){
-    // console.log('test');
     const rows = d3.csvParse(mapData);
-    // console.log(rows);
     const countryStrengths = {};
     let blacklisted = true;
     console.log(blackList);
@@ -39,13 +36,11 @@ const countries = [
       if (!(yearFilter(row))) {
         continue;
       }
-      // console.log(row);
       if (countries.includes(country)) {
         countryStrengths[country] = (countryStrengths[country] || 0) + 1;
       }
     }
     
-    // console.log(countryStrengths);
     map.eachLayer((layer) => {
       if (!layer.options || !layer.options.isTileLayer) {
         map.removeLayer(layer);
@@ -57,7 +52,7 @@ const countries = [
     .domain([0, maxStrength])
     .range([0.2, .8]);
     countries.forEach((countryName) => {
-      fetch(`data/geoJson/${countryName}.geojson`) // Assuming your GeoJSON files are named after the countries
+      fetch(`data/geoJson/${countryName}.geojson`) // pulls from local data folder that contains all the geojsons of relevant countries
       .then((response) => response.json())
       .then((geojson) => {
         // Calculate opacity based on strength and apply it to the layer
@@ -70,10 +65,10 @@ const countries = [
               color: 'black',
               opacity: 50,
               weight: 1,
-            fillOpacity: opacity, // If you want to set the fill opacity as well
+            fillOpacity: opacity, 
           },
         }).bindTooltip(function (layer) {
-          const countryName = layer.feature.properties.ADMIN; // Assuming "name" is the property containing the country name in your GeoJSON
+          const countryName = layer.feature.properties.ADMIN; // Assuming "name" is the property containing the country name in GeoJSON
           let strength = countryStrengths[countryName] || 0;
           if (countryName === 'Czech Republic') {
             strength = countryStrengths['Czech-Republic'];
@@ -110,8 +105,6 @@ const countries = [
 
     legend.addTo(map);
 
-    // ... (rest of your code)
-
     // Function to generate legend breaks based on the opacity scale
     function generateLegendBreaks(scale) {
         const breaksCount = 5; // Adjust the number of breaks as needed
@@ -133,7 +126,6 @@ function yearFilter(row){
   
   // Extract the year from the rowDate (assuming a valid date format)
   const year = new Date(rowDate);
-  // console.log(year);
   // Check if the year is within the specified range (inclusive)
   if (year >= dateMin && year <= dateMax) {
     return true; // Year is within the range
@@ -145,21 +137,14 @@ function yearFilter(row){
 function selectFilter(row){
     const arrayList = Array.from(blackList);
     const listLen = blackList.size;
-    // console.log('hi???');
     if (listLen== 0){
-      // console.log('length');
-      // console.log('l');
       return true;
     }
-    // console.log('hi2');
     for (let i = 0; i < listLen; i++) {
       if (row["US Participant"].includes(arrayList[i])) {
-        // console.log('notfound');
         return false;
-        break; // You might want to use 'break' to exit the loop early if a match is found
       }
     }
-    // console.log('hi3');
 
     return true;
   }

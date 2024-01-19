@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+<!-- This page is used for a heatmap to show what countries were visited when -->
 <html lang="en">
   <head>
     <meta charset="UTF-8">
@@ -18,11 +19,9 @@
   </head>
   <body>
     <div class="header"> <a href="landing.html"><img src="static/images/State_Logo_Navy_XL.png" ></a> </div>
-    <!-- <div style="display: block;"> -->
       <div id="mapDiv" style="height: 800px; width: 60%; position: absolute; left: 20%;"></div>
       <div id="filters">
         <div id="slider-container" style="width: 390px">
-          <!-- <div id="slider"></div> -->
           <input type="date" id="start-date">
           <input type="date" id="end-date">
           <button id="filter-button">Filter</button>
@@ -33,9 +32,10 @@
           </div>
         </div>
       </div>
-    <!-- </div> -->
 
     <div class="footer">
+      <!-- Image footer of Austria, Bulgaria, the Czech Republic, Hungary, Poland, Romania, Slovakia, Slovenia, Liechtenstein, and Switzerland -->
+      <!-- Credit Slovenia by Andrejs Kirma from <a href="https://thenounproject.com/browse/icons/term/slovenia/" target="_blank" title="Slovenia Icons">Noun Project</a> (CC BY 3.0) -->
       <div id="footerContainer">
           <img src="static/images/AustriaFlag.png">
           <img src="static/images/BulgariaFlag.png">
