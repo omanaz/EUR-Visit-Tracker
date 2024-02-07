@@ -1,9 +1,14 @@
-const csvData = localStorage.getItem('csvData');
-const rows = d3.csvParse(csvData);
 const timelineDiv = d3.select('#timeline');
 
 let visibleRows = 0;
 const rowsPerPage = 12;
+
+let csvData;
+fetch('/~Oman/data/Events.csv')
+  .then(response => response.text())
+  .then(data => {
+    csvData = data;
+    const rows = d3.csvParse(csvData);
 
 function createTimelineElement(eventName, date, isEven, country, link) {
     const timelineElement = timelineDiv.append('div')
@@ -141,3 +146,11 @@ goToLatestButton.addEventListener('click', () => {
 function goToTop() {
     window.scrollTo({ top: 0, behavior: 'smooth' });
 }
+})
+.catch(error => {
+  console.error('Failed to read CSV:', error);
+});
+
+window.addEventListener('load', function(){
+document.getElementsByClassName('footer')[0].style.display = 'none';
+});

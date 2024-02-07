@@ -1,5 +1,3 @@
-const csvData = localStorage.getItem('csvData'); // retrieve data
-
 const blackList = new Set();
 let dateMin = new Date('01-01-2020');
 let dateMax = new Date('01-01-2024');
@@ -16,6 +14,13 @@ const countries = [
     "Liechtenstein",
     "Switzerland",
   ];
+
+let csvData;
+fetch('/~Oman/data/Events.csv')
+  .then(response => response.text())
+  .then(data => {
+    csvData = data;
+    
   const map = L.map("mapDiv").setView([48.0, 14.0], 4); // Set initial map center and zoom level
   // Add a base map 
   
@@ -275,3 +280,12 @@ function createInitialsSelect(){
   
 }
 createInitialsSelect();
+
+})
+.catch(error => {
+  console.error('Failed to read CSV:', error);
+});
+
+window.addEventListener('load', function(){
+document.getElementsByClassName('footer')[0].style.display = 'none';
+});

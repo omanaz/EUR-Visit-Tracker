@@ -10,22 +10,23 @@ function removeInitials(name) {
   return name.replace(/\b\w\.\b/g, ''); // Removes single initials followed by a dot
 }
 
-const csvData = localStorage.getItem('csvData');
-
-
-window.addEventListener('load', function(){
-  displayCSVTable(csvData,null,null);
-  document.getElementsByClassName('footer')[0].style.display = 'none';
-});
-
-
+let csvData;
+fetch('/~Oman/data/Events.csv')
+  .then(response => response.text())
+  .then(data => {
+    csvData = data;
+    displayCSVTable(csvData,null,null);
 
 function displayCSVTable(csvData, search, country) {
   // Parse the CSV data using D3
   const rows = d3.csvParse(csvData);
+  console.log(rows);
+  console.log('here and here and hera');
 
   rows.forEach((row) => {
     if (row['US Participant']) {
+      console.log('here and here and hera2');
+
       // Split the names by space to process each name
       const names = row['US Participant'].split(' ');
 
@@ -295,3 +296,12 @@ function createInitialsSelect(){
 }
 
 createInitialsSelect();
+
+})
+.catch(error => {
+  console.error('Failed to read CSV:', error);
+});
+
+window.addEventListener('load', function(){
+document.getElementsByClassName('footer')[0].style.display = 'none';
+});
