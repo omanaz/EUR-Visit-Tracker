@@ -3,13 +3,21 @@ const timelineDiv = d3.select('#timeline');
 let visibleRows = 0;
 const rowsPerPage = 12;
 
-let csvData;
+let csvData,rows;
 fetch('/~Oman/data/Events.csv')
   .then(response => response.text())
   .then(data => {
     csvData = data;
-    const rows = d3.csvParse(csvData);
+    rows = d3.csvParse(csvData);
+    // Sort rows by date
+    rows.sort((a, b) => d3.descending(new Date(a['Date']), new Date(b['Date'])));
+    loadMoreTimeline();
+        
 
+})
+.catch(error => {
+  console.error('Failed to read CSV:', error);
+});
 function createTimelineElement(eventName, date, isEven, country, link) {
     const timelineElement = timelineDiv.append('div')
         .classed('timeline', true);
@@ -35,7 +43,6 @@ function createTimelineElement(eventName, date, isEven, country, link) {
         .attr('src', `static/images/${country}Flag.png`);
 
 }
-
 function loadMoreTimeline() {
     const totalRows = rows.length;
 
@@ -65,11 +72,7 @@ function deleteTopTimeline() {
     timelineDiv.selectAll('.timeline').filter((d, i) => i < rowsPerPage).remove();
 }
 
-// Sort rows by date
-rows.sort((a, b) => d3.descending(new Date(a['Date']), new Date(b['Date'])));
-
 // Initial load
-loadMoreTimeline();
 
 // Add scroll event listener and show/hide goto top
 document.addEventListener('DOMContentLoaded', function () {
@@ -146,11 +149,3 @@ goToLatestButton.addEventListener('click', () => {
 function goToTop() {
     window.scrollTo({ top: 0, behavior: 'smooth' });
 }
-})
-.catch(error => {
-  console.error('Failed to read CSV:', error);
-});
-
-window.addEventListener('load', function(){
-document.getElementsByClassName('footer')[0].style.display = 'none';
-});

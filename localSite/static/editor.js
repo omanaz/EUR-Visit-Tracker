@@ -1,4 +1,4 @@
-const csvData = localStorage.getItem('csvData'); // retrieve local data
+// const csvData = localStorage.getItem('csvData'); // retrieve local data
 // Add a function to handle form submission
 function eventInsert(event) {
   console.log('submit');
@@ -22,25 +22,25 @@ function eventInsert(event) {
   const USParticipant = participantF +' '+participantL
 
   // Create a CSV row from the form data
-  const csvRow = `${eventName},${formattedDate},"noLink",${USParticipant},${participant2},${country},${eventType},${title}`;
-  console.log(csvRow);
+  // const csvRow = `${eventName},${formattedDate},"noLink",${USParticipant},${participant2},${country},${eventType},${title}`;
+  const csvRow = `eventName=${eventName}&formattedDate=${formattedDate}&USParticipant=${USParticipant}&participant2=${participant2}&country=${country}&eventType=${eventType}&title=${title}`;
 
-  // Check if there's existing CSV data in local storage
-  let csvData = localStorage.getItem('csvData') || '';
+  // Send the data to PHP file using AJAX
+  const xhr = new XMLHttpRequest();
+  const url = '/~Oman/write_csv.php';
+  xhr.open('POST', url, true);
+  xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+  xhr.onreadystatechange = function() {
+    if (xhr.readyState === 4 && xhr.status === 200) {
+      console.log(xhr.responseText);
+    }
+  };
+  xhr.send(csvRow);
 
-  // Append the new CSV row to the existing data (if any)
-  if (csvData.length > 0) {
-    csvData += '\n'; // Add a newline separator
-  }
-  csvData += csvRow;
-
-  // Store the updated CSV data in local storage
-  localStorage.setItem('csvData', csvData);
-
-  const downloadButton = document.getElementById('downloadButton');
-  downloadButton.href = `data:text/csv;charset=utf-8,${encodeURIComponent(csvData)}`;
-  downloadButton.download = 'event_data.csv';
-  downloadButton.textContent = 'Download CSV';
+  // const downloadButton = document.getElementById('downloadButton');
+  // downloadButton.href = `data:text/csv;charset=utf-8,${encodeURIComponent(csvData)}`;
+  // downloadButton.download = 'event_data.csv';
+  // downloadButton.textContent = 'Download CSV';
   const successModal = document.getElementById('successModal');
       successModal.style.display = 'block';
   
