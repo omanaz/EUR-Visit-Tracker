@@ -5,12 +5,14 @@
 
 td {
     border: 1px solid black;
+    text-align: center;
+    vertical-align: middle;
 }
 
 #tools {
     position: absolute;
     left: 12%;
-    height: 200px;
+    height: 100px;
     margin-top: 20px;
 }
 
@@ -56,4 +58,11 @@ label{
     -ms-user-select: none; /* IE10+/Edge */
     user-select: none;
     cursor:pointer 
+}
+
+.edit-button{
+    margin: 10px;
+}
+.delete-button{
+    margin: 10px;
 }

@@ -46,7 +46,7 @@ function displayCSVTable(csvData, search, country) {
   });
 
   // Extract headers and filter only the desired ones
-  const desiredHeaders = ["Event Name", "Date", "US Participant", "Country Participant", "Country", "Event Type", 'Principal'];
+  const desiredHeaders = ["Event Name", "Date", "US Participant", "Country Participant", "Country", "Event Type", 'Principal',"ID"];
   const filteredRows = rows.map(row => {
     const filteredRow = {};
     desiredHeaders.forEach(header => {
@@ -139,12 +139,42 @@ function displayCSVTable(csvData, search, country) {
     .enter()
     .append('tr');
 
-  const cellsEnter = rowsEnter
+// Append data cells from your filteredRows objects
+const cellsEnter = rowsEnter
     .selectAll('td')
     .data(d => Object.values(d))
     .enter()
     .append('td')
     .text(d => d);
+
+// Append cell for the edit button
+// rowsEnter.append('td')
+//     .append('button')
+//     .text('Edit')
+//     .attr('class', 'edit-button'); 
+rowsEnter.append('td')
+  .append('button')
+  .text('Delete')
+  .attr('class', 'delete-button')
+  .on('click', function(event, d) { // Use 'd' to access row data
+    const rowId = d.ID;  // Assuming an 'ID' field in your data 
+
+    if (confirm('Are you sure you want to delete this record?')) {
+      // AJAX Request to delete record
+      fetch(`/~Oman/delete.php?id=${rowId}`)
+      .then(response => {
+        if (response.ok) {
+          this.closest('tr').remove(); // Remove the row visually
+          // Optionally update 'eventCountSpan' if you want
+        } else {
+          alert('Error deleting record');
+        }
+      })
+      .catch(error => {
+          console.error('Error deleting:', error);
+      });
+    }
+  }); 
   
 
   // console.log(document.getElementById("tableContainer").querySelector("table"));
@@ -180,6 +210,50 @@ function displayCSVTable(csvData, search, country) {
     URL.revokeObjectURL(url);
   });
   
+  //edit function
+  // d3.selectAll('.edit-button').on('click', function() {
+  //   const row = d3.select(this.parentNode.parentNode); // Get the parent row (<tr>)
+  //   const cells = row.selectAll('td').nodes(); // Get all cells in the row 
+  //   const button = d3.select(this);
+  //   if (button.text() === 'Edit') {
+  //     // Make cells editable
+  //     for (let i = 0; i < cells.length - 1; i++) {
+  //         cells[i].contentEditable = 'true';
+  //     }
+  //     button.text('Save'); 
+
+  // } else { // (button.text() === 'Save')
+  //     // Collect modified data
+  //     const updatedData = {};
+  //     for (let i = 0; i < cells.length - 1; i++) {
+  //         const header = desiredHeaders[i]; // Assuming 'desiredHeaders' has original column names
+  //         updatedData[header] = cells[i].textContent; 
+  //     }
+  //     console.log(updatedData);
+  //     // Send data to server (using 'fetch' for an AJAX request)
+  //     const formData = new URLSearchParams(updatedData).toString();
+
+  //       // Send data using XMLHttpRequest
+  //       const xhr = new XMLHttpRequest();
+  //       const url = '/~Oman/write_csv.php';
+  //       xhr.open('POST', url, true);
+  //       xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+  //       xhr.onreadystatechange = function() {
+  //           if (xhr.readyState === 4 && xhr.status === 200) {
+  //               console.log(xhr.responseText); // Handle successful save (if response needed)
+  //           } else if (xhr.readyState === 4) { // Check for non-200 status as well
+  //              console.error('Error saving data:', xhr.status); 
+  //           }
+  //       };
+  //       xhr.send(formData);
+
+  //     // Make cells non-editable & change button back to 'Edit'
+  //     for (let i = 0; i < cells.length - 1; i++) {
+  //         cells[i].contentEditable = 'false';
+  //     }
+  //     button.text('Edit'); 
+  // }
+  // });
 }
 
 
