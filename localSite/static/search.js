@@ -148,10 +148,10 @@ const cellsEnter = rowsEnter
     .text(d => d);
 
 // Append cell for the edit button
-// rowsEnter.append('td')
-//     .append('button')
-//     .text('Edit')
-//     .attr('class', 'edit-button'); 
+rowsEnter.append('td')
+    .append('button')
+    .text('Edit')
+    .attr('class', 'edit-button'); 
 rowsEnter.append('td')
   .append('button')
   .text('Delete')
@@ -210,50 +210,53 @@ rowsEnter.append('td')
     URL.revokeObjectURL(url);
   });
   
-  //edit function
-  // d3.selectAll('.edit-button').on('click', function() {
-  //   const row = d3.select(this.parentNode.parentNode); // Get the parent row (<tr>)
-  //   const cells = row.selectAll('td').nodes(); // Get all cells in the row 
-  //   const button = d3.select(this);
-  //   if (button.text() === 'Edit') {
-  //     // Make cells editable
-  //     for (let i = 0; i < cells.length - 1; i++) {
-  //         cells[i].contentEditable = 'true';
-  //     }
-  //     button.text('Save'); 
+  // edit function
+  d3.selectAll('.edit-button').on('click', function() {
+    const row = d3.select(this.parentNode.parentNode); // Get the parent row (<tr>)
+    const cells = row.selectAll('td').nodes(); // Get all cells in the row 
+    const button = d3.select(this);
+    if (button.text() === 'Edit') {
+      // Make cells editable
+      for (let i = 0; i < cells.length - 1; i++) {
+          cells[i].contentEditable = 'true';
+      }
+      button.text('Save'); 
 
-  // } else { // (button.text() === 'Save')
-  //     // Collect modified data
-  //     const updatedData = {};
-  //     for (let i = 0; i < cells.length - 1; i++) {
-  //         const header = desiredHeaders[i]; // Assuming 'desiredHeaders' has original column names
-  //         updatedData[header] = cells[i].textContent; 
-  //     }
-  //     console.log(updatedData);
-  //     // Send data to server (using 'fetch' for an AJAX request)
-  //     const formData = new URLSearchParams(updatedData).toString();
+  } else { // (button.text() === 'Save')
+      // Collect modified data
+      const updatedData = {};
+      // for (let i = 0; i < cells.length - 1; i++) {
+      //     const header = desiredHeaders[i]; // Assuming 'desiredHeaders' has original column names
+      //     updatedData[header] = cells[i].textContent; 
+      // }
+      console.log(updatedData);
+      // Send data to server (using 'fetch' for an AJAX request)
+      // const formData = new URLSearchParams(updatedData).toString();
+      let csvRow = `eventName=${cells[0].textContent}&formattedDate=${cells[1].textContent}&link='nolink'&USParticipant=${cells[2].textContent}&participant2=${cells[3].textContent}`;
+      csvRow = csvRow+ `&country=${cells[4].textContent}&eventType=${cells[5].textContent}&title=${cells[6].textContent}&ID=${cells[7].textContent}`;
+      console.log(csvRow);
+      
+        // Send data using XMLHttpRequest
+        const xhr = new XMLHttpRequest();
+        const url = '/~Oman/edit_csv.php';
+        xhr.open('POST', url, true);
+        xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+        xhr.onreadystatechange = function() {
+            if (xhr.readyState === 4 && xhr.status === 200) {
+                console.log(xhr.responseText); // Handle successful save (if response needed)
+            } else if (xhr.readyState === 4) { // Check for non-200 status as well
+               console.error('Error saving data:', xhr.status); 
+            }
+        };
+        xhr.send(csvRow);
 
-  //       // Send data using XMLHttpRequest
-  //       const xhr = new XMLHttpRequest();
-  //       const url = '/~Oman/write_csv.php';
-  //       xhr.open('POST', url, true);
-  //       xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-  //       xhr.onreadystatechange = function() {
-  //           if (xhr.readyState === 4 && xhr.status === 200) {
-  //               console.log(xhr.responseText); // Handle successful save (if response needed)
-  //           } else if (xhr.readyState === 4) { // Check for non-200 status as well
-  //              console.error('Error saving data:', xhr.status); 
-  //           }
-  //       };
-  //       xhr.send(formData);
-
-  //     // Make cells non-editable & change button back to 'Edit'
-  //     for (let i = 0; i < cells.length - 1; i++) {
-  //         cells[i].contentEditable = 'false';
-  //     }
-  //     button.text('Edit'); 
-  // }
-  // });
+      // Make cells non-editable & change button back to 'Edit'
+      for (let i = 0; i < cells.length - 1; i++) {
+          cells[i].contentEditable = 'false';
+      }
+      button.text('Edit'); 
+  }
+  });
 }
 
 
