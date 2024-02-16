@@ -16,6 +16,7 @@ const countries = [
   ];
 
 let csvData;
+// let legendExist = false;
 fetch('/~Oman/data/Events.csv')
   .then(response => response.text())
   .then(data => {
@@ -62,11 +63,13 @@ fetch('/~Oman/data/Events.csv')
       .then((geojson) => {
         // Calculate opacity based on strength and apply it to the layer
         const strength = countryStrengths[countryName] || 0;
-        const opacity = opacityScale(strength);
+        const opacity = opacityScale(strength) === 0.2 ? 1 : opacityScale(strength);
+        // const opacity = opacityScale(strength);
+        const fillColor = strength === 0 ? 'black' :'green';
 
         L.geoJSON(geojson, {
           style: {
-              fillColor: 'green',
+              fillColor: fillColor,
               color: 'black',
               opacity: 50,
               weight: 1,
@@ -86,10 +89,19 @@ fetch('/~Oman/data/Events.csv')
         console.error(`Error loading GeoJSON for ${countryName}:`, error);
       });
     });
+
     const legend = L.control({ position: 'bottomright' });
 
     legend.onAdd = function (map) {
-        const div = L.DomUtil.create('div', 'info legend');
+        let div = L.DomUtil.get('infoLegend'); // Get existing legend if present
+
+        if (div) {
+            div.innerHTML = ''; // Clear the existing legend content
+        } else {
+            div = L.DomUtil.create('div', 'info legend');
+            div.id = 'infoLegend';
+        }
+        // const div = L.DomUtil.create('div', 'info legend');
         const grades = generateLegendBreaks(opacityScale);
         const labels = [];
         labels.push('<h3>Legend</h3>')
@@ -106,6 +118,10 @@ fetch('/~Oman/data/Events.csv')
 
         div.innerHTML = labels.join('<br>');
         return div;
+    };
+
+    legend.onRemove = function(map){
+      delete map.legend;
     };
 
     legend.addTo(map);
