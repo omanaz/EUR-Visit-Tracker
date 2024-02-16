@@ -63,13 +63,13 @@ fetch('/~Oman/data/Events.csv')
       .then((geojson) => {
         // Calculate opacity based on strength and apply it to the layer
         const strength = countryStrengths[countryName] || 0;
-        const opacity = opacityScale(strength) === 0.2 ? 1 : opacityScale(strength);
+        const opacity = opacityScale(strength) === 0.2 ? 0 : opacityScale(strength);
         // const opacity = opacityScale(strength);
-        const fillColor = strength === 0 ? 'black' :'green';
+        // const fillColor = strength === 0 ? 'black' :'green';
 
         L.geoJSON(geojson, {
           style: {
-              fillColor: fillColor,
+              fillColor: 'green',
               color: 'black',
               opacity: 50,
               weight: 1,
