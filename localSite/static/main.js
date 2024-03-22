@@ -13,6 +13,9 @@ function toSearch(){
 function toTimeline(){
   window.location.href = "timeline.html";
 }
+function toImages(){
+  window.location.href = "images.html";
+}
 document.getElementById('fileInput').addEventListener('change', function(e) {
     const file = e.target.files[0];
     const reader = new FileReader();

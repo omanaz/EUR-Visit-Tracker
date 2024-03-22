@@ -5,35 +5,29 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Landing Page</title>
+    <title>Graph Page</title>
     <link rel="stylesheet" href="static/style.css">
     <link rel="stylesheet" href="static/landing.css">
   </head>
   <body>
     <div class="header"> <a href="landing.html"><img src="static/images/State_Logo_Navy_XL.png" ></a> </div>
-    <div id='buttonContainer' class="container">
-      <input id='fileInput' type="file" style="display: none;"> <br>
-      <button onclick="toSearch()">Search Data</button> <br>
-      <button onclick="toEdit()">Input Data</button> <br>
-      <button onclick="toAnalysis()">Analyze Data</button>
-      <button onclick="toTimeline()">View Timeline</button><br>
-      <button onclick="toImages()">View PRC MFA Graphs</button>
+    <div class="container">
+      <h2>Data is pulled from the PRC's Ministry of Foreign Affairs from 2000-2024</h2>
+      <p>For example Austria's data is accessed here → https://www.fmprc.gov.cn/eng/gjhdq_665435/3265_665445/3271_664430/3273_664434/</p>
+      <img src="static/images/Number of Events Per Year by Country All.png">
+      <img src="static/images/Stacked Bar By Type All.png">
+      <h2>Filtering for the top 4 countries by number of entries</h2>
+      <img src="static/images/Number of Events Per Year for Top 4 Avg Line.png">
+      <p>NOTE: Dotted lines denote averages</p>
+      <img src="static/images/Stacked Bar by Meeting Type for Top 4.png">
     </div>
-    <div id="successModal" class="modal">
-      <div class="modal-content">
-        <span class="close" id="closeModal">&times;</span>
-        <p>File successfully loaded!</p>
-      </div>
-    </div>
-    
 
 
 
-
-	  <script src="static/main.js"></script>
+	  <!-- <script src="static/main.js"></script> -->
     <!-- Image footer of Austria, Bulgaria, the Czech Republic, Hungary, Poland, Romania, Slovakia, Slovenia, Liechtenstein, and Switzerland -->
     <!-- Credit Slovenia by Andrejs Kirma from <a href="https://thenounproject.com/browse/icons/term/slovenia/" target="_blank" title="Slovenia Icons">Noun Project</a> (CC BY 3.0) -->
-    <div class="footer">
+    <!-- <div class="footer">
         <div id="footerContainer">
             <img src="static/images/AustriaFlag.png">
             <img src="static/images/BulgariaFlag.png">
@@ -46,8 +40,6 @@
             <img src="static/images/LiechtensteinFlag.png">
             <img src="static/images/SwitzerlandFlag.png">
         </div>
-    </div>
-    
-
+    </div> -->
   </body>
 </html>
